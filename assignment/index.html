@@ -51,14 +51,42 @@
 
       /* =====================
 
-      Start code
 
       ===================== */
 
-      var jsonToCsv = function(json) { console.log(json); };
+    var elementArray = []
+    var jsonToCsv = function(healthCenters) {
+          for (var j = 0; j < healthCenters.length; j++){
+            for(var i in healthCenters[j]){
+              elementArray[0] = Object.keys(healthCenters[0])
+              elementArray[j+1] = Object.values(healthCenters[j])
+            }
+          }
+      console.log(elementArray);
+    };
 
 
-      var addMarkers = function(map) {};
+    var greenIcon = L.icon({
+    iconUrl: 'dental.png',
+    iconSize:     [30, 50], // size of the icon
+    });
+
+    var addMarkers = function(elementArray) {
+      console.log("I'm in")
+        for(var j = 1; j < elementArray.length; j++){
+          console.log("In the loop")
+              if ((parseFloat(elementArray[j][8]))){
+              L.marker([elementArray[j][1],elementArray[j][0]],{icon: greenIcon})
+              .bindPopup(elementArray[j][3])
+              .addTo(map);
+            }
+              else {
+                L.marker([elementArray[j][1],elementArray[j][0]])
+              .bindPopup(elementArray[j][3])
+              .addTo(map);
+              }
+        }
+      };
 
       /* =====================
 
@@ -68,7 +96,8 @@
 
 
       jsonToCsv(healthCenters);
-      addMarkers(map);
+      addMarkers(elementArray);
+      // addMarkers(map);
     </script>
     <!--Your code ends here-->
   </body>
